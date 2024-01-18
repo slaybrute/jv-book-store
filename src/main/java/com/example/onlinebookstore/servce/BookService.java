@@ -1,11 +1,14 @@
 package com.example.onlinebookstore.servce;
 
+import com.example.onlinebookstore.dto.BookDto;
+import com.example.onlinebookstore.dto.CreateBookDto;
 import com.example.onlinebookstore.exception.EntityNotFoundException;
-import com.example.onlinebookstore.model.Book;
 import java.util.List;
 
 public interface BookService {
-    Book save(Book book);
+    BookDto save(CreateBookDto createBookDto);
 
-    List<Book> findAll() throws EntityNotFoundException;
+    List<BookDto> findAll() throws EntityNotFoundException;
+
+    BookDto findById(Long id) throws EntityNotFoundException;
 }
