@@ -11,4 +11,8 @@ public interface BookService {
     List<BookDto> findAll() throws EntityNotFoundException;
 
     BookDto findById(Long id) throws EntityNotFoundException;
+
+    void deleteById(Long id);
+
+    BookDto updateBook(Long id, CreateBookDto createBookDto);
 }

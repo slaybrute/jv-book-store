@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @Service
 @RequiredArgsConstructor
@@ -21,7 +20,7 @@ public class BookServiceImpl implements BookService {
     private final BookMapper bookMapper;
 
     @Override
-    public BookDto save(@RequestBody CreateBookDto createBookDto) {
+    public BookDto save(CreateBookDto createBookDto) {
         Book book = bookMapper.toModel(createBookDto);
         book.setIsbn(IsbnGenerator.generateIsbn());
         return bookMapper.toDto(bookRepository.save(book));
@@ -29,7 +28,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<BookDto> findAll() throws EntityNotFoundException {
-        List<Book> books = bookRepository.getAll();
+        List<Book> books = bookRepository.findAll();
         if (books.isEmpty()) {
             throw new EntityNotFoundException("Cannot find any book");
         }
@@ -44,5 +43,18 @@ public class BookServiceImpl implements BookService {
     public BookDto findById(Long id) throws EntityNotFoundException {
         return bookMapper.toDto(bookRepository.findById(id).orElseThrow(() ->
                 new EntityNotFoundException("Cannot find book by id: " + id)));
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        bookRepository.deleteById(id);
+    }
+
+    @Override
+    public BookDto updateBook(Long id, CreateBookDto createBookDto) {
+        bookRepository.updateBook(id, createBookDto.getAuthor(),
+                createBookDto.getTitle(), createBookDto.getPrice(), createBookDto.getDescription(),
+                createBookDto.getCoverImage());
+        return bookMapper.toDto(createBookDto);
     }
 }
