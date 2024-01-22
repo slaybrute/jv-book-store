@@ -1,12 +1,14 @@
 package com.example.onlinebookstore.servce.impl;
 
 import com.example.onlinebookstore.dto.BookDto;
+import com.example.onlinebookstore.dto.BookSearchParameters;
 import com.example.onlinebookstore.dto.CreateBookDto;
 import com.example.onlinebookstore.exception.EntityNotFoundException;
 import com.example.onlinebookstore.generator.IsbnGenerator;
 import com.example.onlinebookstore.mapper.BookMapper;
 import com.example.onlinebookstore.model.Book;
-import com.example.onlinebookstore.repository.BookRepository;
+import com.example.onlinebookstore.repository.book.BookRepository;
+import com.example.onlinebookstore.repository.book.BookSpecificationBuilder;
 import com.example.onlinebookstore.servce.BookService;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +20,7 @@ import org.springframework.stereotype.Service;
 public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
     private final BookMapper bookMapper;
+    private final BookSpecificationBuilder bookSpecificationBuilder;
 
     @Override
     public BookDto save(CreateBookDto createBookDto) {
@@ -55,5 +58,15 @@ public class BookServiceImpl implements BookService {
         Book book = bookMapper.toModel(createBookDto);
         book.setId(id);
         return bookMapper.toDto(bookRepository.save(book));
+    }
+
+    @Override
+    public List<BookDto> search(BookSearchParameters bookSearchParameters) {
+        List<BookDto> bookDtos = new ArrayList<>();
+        for (Book book : bookRepository.findAll(bookSpecificationBuilder
+                .build(bookSearchParameters))) {
+            bookDtos.add(bookMapper.toDto(book));
+        }
+        return bookDtos;
     }
 }
