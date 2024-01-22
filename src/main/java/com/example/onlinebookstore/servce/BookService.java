@@ -1,6 +1,7 @@
 package com.example.onlinebookstore.servce;
 
 import com.example.onlinebookstore.dto.BookDto;
+import com.example.onlinebookstore.dto.BookSearchParameters;
 import com.example.onlinebookstore.dto.CreateBookDto;
 import com.example.onlinebookstore.exception.EntityNotFoundException;
 import java.util.List;
@@ -15,4 +16,6 @@ public interface BookService {
     void deleteById(Long id);
 
     BookDto updateBook(Long id, CreateBookDto createBookDto);
+
+    List<BookDto> search(BookSearchParameters bookSearchParameters);
 }
