@@ -1,8 +1,8 @@
 package com.example.onlinebookstore.servce;
 
-import com.example.onlinebookstore.dto.BookDto;
-import com.example.onlinebookstore.dto.BookSearchParameters;
-import com.example.onlinebookstore.dto.CreateBookDto;
+import com.example.onlinebookstore.dto.book.BookDto;
+import com.example.onlinebookstore.dto.book.BookSearchParameters;
+import com.example.onlinebookstore.dto.book.CreateBookDto;
 import com.example.onlinebookstore.exception.EntityNotFoundException;
 import java.util.List;
 
