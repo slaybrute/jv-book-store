@@ -1,10 +1,11 @@
 package com.example.onlinebookstore.controller;
 
-import com.example.onlinebookstore.dto.BookDto;
-import com.example.onlinebookstore.dto.BookSearchParameters;
-import com.example.onlinebookstore.dto.CreateBookDto;
+import com.example.onlinebookstore.dto.book.BookDto;
+import com.example.onlinebookstore.dto.book.BookSearchParameters;
+import com.example.onlinebookstore.dto.book.CreateBookDto;
 import com.example.onlinebookstore.exception.EntityNotFoundException;
 import com.example.onlinebookstore.servce.BookService;
+import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -25,7 +26,7 @@ public class BookController {
     private final BookService bookService;
 
     @PostMapping
-    public BookDto save(@RequestBody CreateBookDto createBookDto) {
+    public BookDto save(@RequestBody @Valid CreateBookDto createBookDto) {
         return bookService.save(createBookDto);
     }
 
@@ -46,7 +47,8 @@ public class BookController {
     }
 
     @PutMapping("/{id}")
-    public BookDto updateBook(@PathVariable Long id, @RequestBody CreateBookDto createBookDto) {
+    public BookDto updateBook(@PathVariable Long id,
+                              @RequestBody @Valid CreateBookDto createBookDto) {
         return bookService.updateBook(id, createBookDto);
     }
 
