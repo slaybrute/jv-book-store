@@ -13,6 +13,7 @@ import com.example.onlinebookstore.servce.BookService;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -30,14 +31,13 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<BookDto> findAll() throws EntityNotFoundException {
-        List<Book> books = bookRepository.findAll();
-        if (books.isEmpty()) {
-            throw new EntityNotFoundException("Cannot find any book");
-        }
+    public List<BookDto> findAll(Pageable pageable) throws EntityNotFoundException {
         List<BookDto> bookDtos = new ArrayList<>();
-        for (Book book : books) {
+        for (Book book : bookRepository.findAll(pageable)) {
             bookDtos.add(bookMapper.toDto(book));
+        }
+        if (bookDtos.isEmpty()) {
+            throw new EntityNotFoundException("Cannot find any book");
         }
         return bookDtos;
     }
@@ -49,23 +49,30 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void deleteById(Long id) throws EntityNotFoundException {
+        findById(id);
         bookRepository.deleteById(id);
     }
 
     @Override
-    public BookDto updateBook(Long id, CreateBookDto createBookDto) {
+    public BookDto updateBook(Long id, CreateBookDto createBookDto) throws EntityNotFoundException {
+        findById(id);
         Book book = bookMapper.toModel(createBookDto);
         book.setId(id);
         return bookMapper.toDto(bookRepository.save(book));
     }
 
     @Override
-    public List<BookDto> search(BookSearchParameters bookSearchParameters) {
+    public List<BookDto> search(BookSearchParameters bookSearchParameters)
+            throws EntityNotFoundException {
         List<BookDto> bookDtos = new ArrayList<>();
         for (Book book : bookRepository.findAll(bookSpecificationBuilder
                 .build(bookSearchParameters))) {
             bookDtos.add(bookMapper.toDto(book));
+        }
+        if (bookDtos.isEmpty()) {
+            throw new EntityNotFoundException("Cannot find any book by search parameters: "
+                    + bookSearchParameters);
         }
         return bookDtos;
     }
