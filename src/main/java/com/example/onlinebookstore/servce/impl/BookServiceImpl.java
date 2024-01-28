@@ -3,13 +3,15 @@ package com.example.onlinebookstore.servce.impl;
 import com.example.onlinebookstore.dto.book.BookDto;
 import com.example.onlinebookstore.dto.book.BookSearchParameters;
 import com.example.onlinebookstore.dto.book.CreateBookDto;
-import com.example.onlinebookstore.exception.EntityNotFoundException;
+import com.example.onlinebookstore.exception.DeleteEntityException;
 import com.example.onlinebookstore.generator.IsbnGenerator;
 import com.example.onlinebookstore.mapper.BookMapper;
 import com.example.onlinebookstore.model.Book;
 import com.example.onlinebookstore.repository.book.BookRepository;
 import com.example.onlinebookstore.repository.book.BookSpecificationBuilder;
 import com.example.onlinebookstore.servce.BookService;
+import com.example.onlinebookstore.validation.book.BookCreationValidator;
+import jakarta.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -22,9 +24,11 @@ public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
     private final BookMapper bookMapper;
     private final BookSpecificationBuilder bookSpecificationBuilder;
+    private final BookCreationValidator bookCreationValidator;
 
     @Override
     public BookDto save(CreateBookDto createBookDto) {
+        bookCreationValidator.isBookCreationValid(createBookDto);
         Book book = bookMapper.toModel(createBookDto);
         book.setIsbn(IsbnGenerator.generateIsbn());
         return bookMapper.toDto(bookRepository.save(book));
@@ -43,19 +47,24 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public BookDto findById(Long id) throws EntityNotFoundException {
+    public BookDto findById(Long id) {
         return bookMapper.toDto(bookRepository.findById(id).orElseThrow(() ->
                 new EntityNotFoundException("Cannot find book by id: " + id)));
     }
 
     @Override
-    public void deleteById(Long id) throws EntityNotFoundException {
-        findById(id);
+    public void deleteById(Long id) {
+        Book book = bookRepository.findById(id).orElseThrow(() ->
+                new EntityNotFoundException("Cannot find book by id: " + id));
+        if (book.isDeleted()) {
+            throw new DeleteEntityException("This book is already deleted with id: " + id);
+        }
         bookRepository.deleteById(id);
     }
 
     @Override
     public BookDto updateBook(Long id, CreateBookDto createBookDto) throws EntityNotFoundException {
+        bookCreationValidator.isBookCreationValid(createBookDto);
         findById(id);
         Book book = bookMapper.toModel(createBookDto);
         book.setId(id);

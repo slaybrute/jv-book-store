@@ -1,7 +1,7 @@
 package com.example.onlinebookstore.mapper;
 
 import com.example.onlinebookstore.config.MapperConfig;
-import com.example.onlinebookstore.dto.user.CreateUserDto;
+import com.example.onlinebookstore.dto.user.RegisterUserDto;
 import com.example.onlinebookstore.dto.user.UserDto;
 import com.example.onlinebookstore.model.User;
 import org.mapstruct.Mapper;
@@ -10,5 +10,5 @@ import org.mapstruct.Mapper;
 public interface UserMapper {
     UserDto toDto(User user);
 
-    User toModel(CreateUserDto createUserDto);
+    User toModel(RegisterUserDto registerUserDto);
 }

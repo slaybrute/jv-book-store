@@ -1,5 +1,6 @@
-package com.example.onlinebookstore.validation;
+package com.example.onlinebookstore.validation.user.registration.annotation;
 
+import com.example.onlinebookstore.validation.user.registration.impl.PasswordValidator;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 import java.lang.annotation.ElementType;
@@ -7,11 +8,11 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Constraint(validatedBy = EmailValidator.class)
+@Constraint(validatedBy = PasswordValidator.class)
 @Target({ElementType.PARAMETER, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Email {
-    String message() default "Invalid format email";
+public @interface Password {
+    String message() default "Invalid format password";
 
     Class<?>[] groups() default {};
 
