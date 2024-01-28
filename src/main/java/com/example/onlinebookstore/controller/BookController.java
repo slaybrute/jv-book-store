@@ -3,7 +3,6 @@ package com.example.onlinebookstore.controller;
 import com.example.onlinebookstore.dto.book.BookDto;
 import com.example.onlinebookstore.dto.book.BookSearchParameters;
 import com.example.onlinebookstore.dto.book.CreateBookDto;
-import com.example.onlinebookstore.exception.EntityNotFoundException;
 import com.example.onlinebookstore.servce.BookService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
@@ -29,42 +28,40 @@ public class BookController {
 
     @PostMapping
     @Operation(summary = "Create new book", description = "Create new book and save it to db")
-    public BookDto save(@RequestBody @Valid CreateBookDto createBookDto) {
+    public BookDto save(@Valid @RequestBody CreateBookDto createBookDto) {
         return bookService.save(createBookDto);
     }
 
     @GetMapping
     @Operation(summary = "Get all books", description = "Get all available books by pagination")
-    public List<BookDto> findAll(Pageable pageable) throws EntityNotFoundException {
+    public List<BookDto> findAll(Pageable pageable) {
         return bookService.findAll(pageable);
     }
 
     @GetMapping("/{id}")
     @Operation(summary = "Get book by id", description = "Get book by id")
-    public BookDto findById(@PathVariable Long id) throws EntityNotFoundException {
+    public BookDto findById(@PathVariable Long id) {
         return bookService.findById(id);
-    }
-
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    @DeleteMapping("/{id}")
-    @Operation(summary = "Delete book by id", description = "Safe delete book by id")
-    public void deleteById(@PathVariable Long id) throws EntityNotFoundException {
-        bookService.deleteById(id);
     }
 
     @PutMapping("/{id}")
     @Operation(summary = "Update book by id", description = "Update book by id")
     public BookDto updateBook(@PathVariable Long id,
-                              @RequestBody @Valid CreateBookDto createBookDto)
-            throws EntityNotFoundException {
+                              @RequestBody @Valid CreateBookDto createBookDto) {
         return bookService.updateBook(id, createBookDto);
     }
 
     @GetMapping("/searh")
     @Operation(summary = "Search books by parameters",
             description = "Search books by titles and authors")
-    public List<BookDto> search(BookSearchParameters bookSearchParameters)
-            throws EntityNotFoundException {
+    public List<BookDto> search(BookSearchParameters bookSearchParameters) {
         return bookService.search(bookSearchParameters);
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("/{id}")
+    @Operation(summary = "Delete book by id", description = "Safe delete book by id")
+    public void deleteById(@PathVariable Long id) {
+        bookService.deleteById(id);
     }
 }
