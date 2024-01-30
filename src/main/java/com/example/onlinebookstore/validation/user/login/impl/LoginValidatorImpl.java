@@ -2,11 +2,16 @@ package com.example.onlinebookstore.validation.user.login.impl;
 
 import com.example.onlinebookstore.dto.user.LoginUserDto;
 import com.example.onlinebookstore.exception.LoginException;
+import com.example.onlinebookstore.validation.common.NullFieldValidator;
 import com.example.onlinebookstore.validation.user.login.LoginValidator;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class LoginValidatorImpl implements LoginValidator {
+    private final NullFieldValidator nullFieldValidator;
+
     @Override
     public void isLoginValid(LoginUserDto loginUserDto) {
         isEmailValid(loginUserDto.getEmail());
@@ -15,15 +20,11 @@ public class LoginValidatorImpl implements LoginValidator {
 
     @Override
     public void isEmailValid(String email) {
-        if (email == null) {
-            throw new LoginException("Enter email");
-        }
+        nullFieldValidator.isFieldNotNull(email, new LoginException("Enter email"));
     }
 
     @Override
     public void isPasswordValid(String password) {
-        if (password == null) {
-            throw new LoginException("Enter password");
-        }
+        nullFieldValidator.isFieldNotNull(password, new LoginException("Enter password"));
     }
 }

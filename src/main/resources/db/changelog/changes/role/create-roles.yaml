@@ -1,0 +1,21 @@
+databaseChangeLog:
+  - changeSet:
+      id: add_admin_role
+      author: Artem Peiev
+      changes:
+        - insert:
+            tableName: roles
+            columns:
+              - column:
+                  name: role_name
+                  value: ADMIN
+  - changeSet:
+      id: add_user_role
+      author: Artem Peiev
+      changes:
+        - insert:
+            tableName: roles
+            columns:
+              - column:
+                  name: role_name
+                  value: USER
