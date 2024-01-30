@@ -10,6 +10,7 @@ import jakarta.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -45,5 +46,11 @@ public class UserServiceImpl implements UserService {
             throw new DeleteEntityException("This user is already deleted with id: " + id);
         }
         userRepository.deleteById(id);
+    }
+
+    @Override
+    public void deleteByEmail(Authentication authentication) {
+        User user = (User)authentication.getPrincipal();
+        userRepository.deleteByEmail(user.getEmail());
     }
 }
