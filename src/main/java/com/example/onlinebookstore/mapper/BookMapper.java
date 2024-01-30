@@ -5,10 +5,12 @@ import com.example.onlinebookstore.dto.book.BookDto;
 import com.example.onlinebookstore.dto.book.CreateBookDto;
 import com.example.onlinebookstore.model.Book;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 @Mapper(config = MapperConfig.class)
 public interface BookMapper {
-    BookDto toDto(Book book);
-
     Book toModel(CreateBookDto createBookDto);
+
+    @Mapping(target = "categoryIds", ignore = true)
+    BookDto toDto(Book book);
 }

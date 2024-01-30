@@ -1,15 +1,16 @@
-package com.example.onlinebookstore.servce.impl;
+package com.example.onlinebookstore.service.impl;
 
 import com.example.onlinebookstore.dto.user.UserDto;
 import com.example.onlinebookstore.exception.DeleteEntityException;
 import com.example.onlinebookstore.mapper.UserMapper;
 import com.example.onlinebookstore.model.User;
 import com.example.onlinebookstore.repository.user.UserRepository;
-import com.example.onlinebookstore.servce.UserService;
+import com.example.onlinebookstore.service.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -45,5 +46,11 @@ public class UserServiceImpl implements UserService {
             throw new DeleteEntityException("This user is already deleted with id: " + id);
         }
         userRepository.deleteById(id);
+    }
+
+    @Override
+    public void deleteByEmail(Authentication authentication) {
+        User user = (User) authentication.getPrincipal();
+        userRepository.deleteByEmail(user.getEmail());
     }
 }

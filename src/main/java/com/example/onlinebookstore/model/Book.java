@@ -8,8 +8,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.math.BigDecimal;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
 import org.hibernate.annotations.SQLDelete;
 
 @Data
@@ -17,8 +15,6 @@ import org.hibernate.annotations.SQLDelete;
 @Table(name = "books")
 @SQLDelete(sql = "UPDATE books SET is_deleted = true WHERE id=?")
 public class Book {
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -32,6 +28,6 @@ public class Book {
     private BigDecimal price;
     private String description;
     private String coverImage;
-    @Column(name = "is_deleted", nullable = false)
+    @Column(name = "is_deleted")
     private boolean isDeleted;
 }

@@ -1,4 +1,4 @@
-package com.example.onlinebookstore.servce.impl;
+package com.example.onlinebookstore.service.impl;
 
 import com.example.onlinebookstore.dto.book.BookDto;
 import com.example.onlinebookstore.dto.book.BookSearchParameters;
@@ -9,7 +9,7 @@ import com.example.onlinebookstore.mapper.BookMapper;
 import com.example.onlinebookstore.model.Book;
 import com.example.onlinebookstore.repository.book.BookRepository;
 import com.example.onlinebookstore.repository.book.BookSpecificationBuilder;
-import com.example.onlinebookstore.servce.BookService;
+import com.example.onlinebookstore.service.BookService;
 import com.example.onlinebookstore.validation.book.BookCreationValidator;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.ArrayList;
@@ -35,7 +35,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<BookDto> findAll(Pageable pageable) throws EntityNotFoundException {
+    public List<BookDto> findAll(Pageable pageable) {
         List<BookDto> bookDtos = new ArrayList<>();
         for (Book book : bookRepository.findAll(pageable)) {
             bookDtos.add(bookMapper.toDto(book));
@@ -63,7 +63,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public BookDto updateBook(Long id, CreateBookDto createBookDto) throws EntityNotFoundException {
+    public BookDto updateBook(Long id, CreateBookDto createBookDto) {
         bookCreationValidator.isBookCreationValid(createBookDto);
         findById(id);
         Book book = bookMapper.toModel(createBookDto);
