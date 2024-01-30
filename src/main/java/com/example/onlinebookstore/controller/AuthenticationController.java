@@ -1,6 +1,7 @@
 package com.example.onlinebookstore.controller;
 
 import com.example.onlinebookstore.dto.user.LoginUserDto;
+import com.example.onlinebookstore.dto.user.LoginUserResponseDto;
 import com.example.onlinebookstore.dto.user.RegisterAdminDto;
 import com.example.onlinebookstore.dto.user.RegisterUserDto;
 import com.example.onlinebookstore.dto.user.UserDto;
@@ -24,7 +25,7 @@ public class AuthenticationController {
 
     @PostMapping("/login")
     @Operation(summary = "Login user", description = "Login user")
-    public boolean register(@RequestBody LoginUserDto loginUserDto) {
+    public LoginUserResponseDto register(@RequestBody LoginUserDto loginUserDto) {
         return loginService.login(loginUserDto);
     }
 
