@@ -10,6 +10,7 @@ import jakarta.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
@@ -20,13 +21,9 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
 
     @Override
-    public List<UserDto> findAll() {
-        List<User> users = userRepository.findAll();
-        if (users.isEmpty()) {
-            throw new EntityNotFoundException("Cannot find any user");
-        }
+    public List<UserDto> findAll(Pageable pageable) {
         List<UserDto> userDtos = new ArrayList<>();
-        for (User user : users) {
+        for (User user : userRepository.findAll(pageable)) {
             userDtos.add(userMapper.toDto(user));
         }
         return userDtos;

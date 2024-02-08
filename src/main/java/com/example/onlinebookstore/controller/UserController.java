@@ -5,6 +5,7 @@ import com.example.onlinebookstore.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -24,8 +25,8 @@ public class UserController {
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     @Operation(summary = "Get all users", description = "Get all available users")
-    public List<UserDto> findAll() {
-        return userService.findAll();
+    public List<UserDto> findAll(Pageable pageable) {
+        return userService.findAll(pageable);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
