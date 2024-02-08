@@ -42,38 +42,43 @@ This Spring Boot application serves as a book store, providing functionalities t
 - Spring Security
 - Hibernate
 - RESTful API
+
 # API Endpoints
+
+## Authentication API
+
+- `POST /auth/login`: Login user
+- `POST /auth/register`: Register new user
+- `POST /auth/register/admin`: Register new user by admin
 
 ## User API
 
-- `/api/users` - Get all users
-- `/api/users/{userId}` - Get user by ID
-- `/api/users/register` - Register a new user
-- `/api/users/update` - Update user details
+- `GET /users`: Get all users (Requires `ADMIN` role)
+- `GET /users/by-email`: Get user by email (Requires `ADMIN` role)
+- `DELETE /users/{id}`: Delete user by ID (Requires `ADMIN` role)
+- `DELETE /users`: Delete user by email
 
 ## Book API
 
-- `/api/books` - Get all books
-- `/api/books/{bookId}` - Get book by ID
-- `/api/books/add` - Add a new book
-- `/api/books/update` - Update book details
+- `POST /books`: Create a new book (Requires `ADMIN` role)
+- `PUT /books/{id}`: Update book by ID (Requires `ADMIN` role)
+- `DELETE /books/{id}`: Delete book by ID (Requires `ADMIN` role)
+- `GET /books`: Get all books by pagination
+- `GET /books/{id}`: Get book by ID
+- `GET /books/search`: Search books by parameters
 
 ## Category API
 
-- `/api/categories` - Get all categories
-- `/api/categories/{categoryId}` - Get category by ID
-- `/api/categories/add` - Add a new category
+- `POST /categories`: Create a new category (Requires `ADMIN` role)
+- `PUT /categories/{id}`: Update category by ID (Requires `ADMIN` role)
+- `DELETE /categories/{id}`: Delete category by ID (Requires `ADMIN` role)
+- `GET /categories`: Get all categories by pagination
+- `GET /categories/{id}`: Get category by ID
+- `GET /categories/{id}/books`: Get books by category ID
 
 ## Shopping Cart API
 
-- `/api/shopping-carts/{userId}` - Get user's shopping cart
-- `/api/shopping-carts/add-item` - Add an item to the shopping cart
-- `/api/shopping-carts/remove-item` - Remove an item from the shopping cart
-
 ## Order API
-
-- `/api/orders/{userId}` - Get user's orders
-- `/api/orders/place-order` - Place a new order
 
 ## Setup
 
