@@ -1,6 +1,7 @@
 package com.example.onlinebookstore.service.impl;
 
 import com.example.onlinebookstore.dto.book.BookDto;
+import com.example.onlinebookstore.dto.book.BookDtoWithoutCategoryIds;
 import com.example.onlinebookstore.dto.book.BookSearchParameters;
 import com.example.onlinebookstore.dto.book.CreateBookDto;
 import com.example.onlinebookstore.exception.DeleteEntityException;
@@ -82,6 +83,18 @@ public class BookServiceImpl implements BookService {
         if (bookDtos.isEmpty()) {
             throw new EntityNotFoundException("Cannot find any book by search parameters: "
                     + bookSearchParameters);
+        }
+        return bookDtos;
+    }
+
+    @Override
+    public List<BookDtoWithoutCategoryIds> findByCategoryId(Long id) {
+        List<BookDtoWithoutCategoryIds> bookDtos = new ArrayList<>();
+        for (Book book : bookRepository.findByCategoryId(id)) {
+            bookDtos.add(bookMapper.toDtoWithoutCategories(book));
+        }
+        if (bookDtos.isEmpty()) {
+            throw new EntityNotFoundException("Cannot find any book by category id: " + id);
         }
         return bookDtos;
     }
