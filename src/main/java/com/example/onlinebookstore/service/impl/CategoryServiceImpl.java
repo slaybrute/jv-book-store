@@ -26,9 +26,6 @@ public class CategoryServiceImpl implements CategoryService {
         for (Category category : categoryRepository.findAll(pageable)) {
             categoryDtos.add(categoryMapper.toDto(category));
         }
-        if (categoryDtos.isEmpty()) {
-            throw new EntityNotFoundException("Cannot find any category");
-        }
         return categoryDtos;
     }
 

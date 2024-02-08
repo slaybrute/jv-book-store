@@ -41,9 +41,6 @@ public class BookServiceImpl implements BookService {
         for (Book book : bookRepository.findAll(pageable)) {
             bookDtos.add(bookMapper.toDto(book));
         }
-        if (bookDtos.isEmpty()) {
-            throw new EntityNotFoundException("Cannot find any book");
-        }
         return bookDtos;
     }
 
@@ -79,10 +76,6 @@ public class BookServiceImpl implements BookService {
         for (Book book : bookRepository.findAll(bookSpecificationBuilder
                 .build(bookSearchParameters))) {
             bookDtos.add(bookMapper.toDto(book));
-        }
-        if (bookDtos.isEmpty()) {
-            throw new EntityNotFoundException("Cannot find any book by search parameters: "
-                    + bookSearchParameters);
         }
         return bookDtos;
     }
