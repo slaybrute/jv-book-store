@@ -1,5 +1,6 @@
 package com.example.onlinebookstore.exception;
 
+import jakarta.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -36,19 +37,29 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Object> handleAllOtherExceptions(Exception e) {
-        return getResponseEntity(e.getMessage());
-    }
-
-    @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<Object> handleAllOtherRuntimeExceptions(RuntimeException e) {
-        return getResponseEntity(e.getMessage());
-    }
-
-    private ResponseEntity<Object> getResponseEntity(String message) {
         Map<String, Object> responseBody = new LinkedHashMap<>();
         responseBody.put("timespan", LocalDateTime.now());
         responseBody.put("status", HttpStatus.BAD_REQUEST);
-        responseBody.put("exception", message);
+        responseBody.put("exception", e.getMessage());
+        return new ResponseEntity<>(responseBody, new HttpHeaders(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(EntityAlreadyPresentException.class)
+    public ResponseEntity<Object> handleEntityAlreadyPresentException(
+            EntityAlreadyPresentException e) {
+        Map<String, Object> responseBody = new LinkedHashMap<>();
+        responseBody.put("timespan", LocalDateTime.now());
+        responseBody.put("status", HttpStatus.CONFLICT);
+        responseBody.put("exception", e.getMessage());
+        return new ResponseEntity<>(responseBody, new HttpHeaders(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<Object> handleAllOtherRuntimeExceptions(EntityNotFoundException e) {
+        Map<String, Object> responseBody = new LinkedHashMap<>();
+        responseBody.put("timespan", LocalDateTime.now());
+        responseBody.put("status", HttpStatus.NOT_FOUND);
+        responseBody.put("exception", e.getMessage());
         return new ResponseEntity<>(responseBody, new HttpHeaders(), HttpStatus.BAD_REQUEST);
     }
 

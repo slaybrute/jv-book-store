@@ -30,7 +30,7 @@ public class BookController {
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     @Operation(summary = "Create new book", description = "Create new book and save it to db")
-    public BookDto save(@Valid @RequestBody CreateBookDto createBookDto) {
+    public BookDto save(@RequestBody @Valid CreateBookDto createBookDto) {
         return bookService.save(createBookDto);
     }
 

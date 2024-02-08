@@ -25,13 +25,13 @@ public class AuthenticationController {
 
     @PostMapping("/login")
     @Operation(summary = "Login user", description = "Login user")
-    public LoginUserResponseDto register(@RequestBody LoginUserDto loginUserDto) {
+    public LoginUserResponseDto register(@RequestBody @Valid LoginUserDto loginUserDto) {
         return loginService.login(loginUserDto);
     }
 
     @PostMapping("/register")
     @Operation(summary = "Register new user", description = "Register new user and save it to db")
-    public UserDto register(@Valid @RequestBody RegisterUserDto registerUserDto) {
+    public UserDto register(@RequestBody @Valid RegisterUserDto registerUserDto) {
         return registrationService.register(registerUserDto);
     }
 
@@ -39,7 +39,7 @@ public class AuthenticationController {
     @PostMapping("/register/admin")
     @Operation(summary = "Register new user by admin",
             description = "Register new user by admin role")
-    public UserDto registerAdmin(@RequestBody RegisterAdminDto registerAdminDto) {
+    public UserDto registerAdmin(@RequestBody @Valid RegisterAdminDto registerAdminDto) {
         return registrationService.registerAdmin(registerAdminDto);
     }
 }
