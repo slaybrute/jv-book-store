@@ -1,6 +1,7 @@
 package com.example.onlinebookstore.validation.category.impl;
 
 import com.example.onlinebookstore.dto.category.CategoryDto;
+import com.example.onlinebookstore.exception.EntityAlreadyPresentException;
 import com.example.onlinebookstore.exception.InvalidCategoryException;
 import com.example.onlinebookstore.repository.category.CategoryRepository;
 import com.example.onlinebookstore.validation.category.CategoryValidator;
@@ -25,7 +26,7 @@ public class CategoryValidatorImpl implements CategoryValidator {
     public void isCreateCategoryValid(CategoryDto categoryDto) {
         isCategoryValid(categoryDto);
         if (categoryRepository.findByName(categoryDto.getName()).isPresent()) {
-            throw new InvalidCategoryException("Category with such name is already exists");
+            throw new EntityAlreadyPresentException("Category with such name is already exists");
         }
     }
 

@@ -36,10 +36,19 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Object> handleAllOtherExceptions(Exception e) {
+        return getResponseEntity(e.getMessage());
+    }
+
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<Object> handleAllOtherRuntimeExceptions(RuntimeException e) {
+        return getResponseEntity(e.getMessage());
+    }
+
+    private ResponseEntity<Object> getResponseEntity(String message) {
         Map<String, Object> responseBody = new LinkedHashMap<>();
         responseBody.put("timespan", LocalDateTime.now());
         responseBody.put("status", HttpStatus.BAD_REQUEST);
-        responseBody.put("exception", e.getMessage());
+        responseBody.put("exception", message);
         return new ResponseEntity<>(responseBody, new HttpHeaders(), HttpStatus.BAD_REQUEST);
     }
 

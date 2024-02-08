@@ -1,6 +1,7 @@
 package com.example.onlinebookstore.validation.user.role.impl;
 
 import com.example.onlinebookstore.dto.role.CreateRoleDto;
+import com.example.onlinebookstore.exception.EntityAlreadyPresentException;
 import com.example.onlinebookstore.exception.InvalidRoleException;
 import com.example.onlinebookstore.model.enums.RoleName;
 import com.example.onlinebookstore.repository.role.RoleRepository;
@@ -27,7 +28,7 @@ public class RoleValidatorImpl implements RoleValidator {
         nullFieldValidator.isFieldNotNull(roleName,
                 new InvalidRoleException("Enter role name"));
         if (roleRepository.findByRoleName(roleName).isPresent()) {
-            throw new InvalidRoleException("Role with such name is already exists");
+            throw new EntityAlreadyPresentException("Role with such name is already exists");
         }
     }
 }
