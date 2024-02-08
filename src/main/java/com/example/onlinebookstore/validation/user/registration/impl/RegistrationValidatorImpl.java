@@ -2,6 +2,7 @@ package com.example.onlinebookstore.validation.user.registration.impl;
 
 import com.example.onlinebookstore.dto.user.RegisterAdminDto;
 import com.example.onlinebookstore.dto.user.RegisterUserDto;
+import com.example.onlinebookstore.exception.EntityAlreadyPresentException;
 import com.example.onlinebookstore.exception.RegistrationException;
 import com.example.onlinebookstore.model.Role;
 import com.example.onlinebookstore.repository.user.UserRepository;
@@ -41,7 +42,7 @@ public class RegistrationValidatorImpl implements RegistrationValidator {
     public void isEmailValid(String email) {
         nullFieldValidator.isFieldNotNull(email, new RegistrationException("Enter email"));
         if (userRepository.findByEmail(email).isPresent()) {
-            throw new RegistrationException("User with such email existed: " + email);
+            throw new EntityAlreadyPresentException("User with such email existed: " + email);
         }
     }
 
