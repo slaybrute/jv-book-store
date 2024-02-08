@@ -12,8 +12,8 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class CategoryValidatorImpl implements CategoryValidator {
-    private final NullFieldValidator nullFieldValidator;
     private final CategoryRepository categoryRepository;
+    private final NullFieldValidator nullFieldValidator;
 
     @Override
     public void isCategoryValid(CategoryDto categoryDto) {

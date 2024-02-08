@@ -5,6 +5,7 @@ import com.example.onlinebookstore.model.Role;
 import com.example.onlinebookstore.model.enums.RoleName;
 import com.example.onlinebookstore.service.RoleService;
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,7 +30,7 @@ public class RoleController {
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     @Operation(summary = "Create new role", description = "Create new role")
-    Role createRole(@RequestBody CreateRoleDto createRoleDto) {
+    Role createRole(@RequestBody @Valid CreateRoleDto createRoleDto) {
         return roleService.createRole(createRoleDto);
     }
 }
