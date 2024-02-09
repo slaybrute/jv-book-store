@@ -28,7 +28,8 @@ public class RoleValidatorImpl implements RoleValidator {
         nullFieldValidator.isFieldNotNull(roleName,
                 new InvalidRoleException("Enter role name"));
         if (roleRepository.findByRoleName(roleName).isPresent()) {
-            throw new EntityAlreadyPresentException("Role with such name is already exists");
+            throw new EntityAlreadyPresentException("Role with such name is already exists: "
+                    + roleName.name());
         }
     }
 }

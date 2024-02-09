@@ -46,6 +46,7 @@ public class CategoryServiceImpl implements CategoryService {
         getById(id);
         Category category = categoryMapper.toModel(categoryDto);
         category.setId(id);
+        categoryRepository.save(category);
         return categoryMapper.toDto(category);
     }
 
@@ -56,7 +57,8 @@ public class CategoryServiceImpl implements CategoryService {
 
     private void isCreateCategoryValid(CategoryDto categoryDto) {
         if (categoryRepository.findByName(categoryDto.getName()).isPresent()) {
-            throw new EntityAlreadyPresentException("Category with such name is already exists");
+            throw new EntityAlreadyPresentException("Category with such name is already exists: "
+                    + categoryDto.getName());
         }
     }
 }
