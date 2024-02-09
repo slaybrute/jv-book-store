@@ -17,5 +17,5 @@ public class CreateBookDto {
     private BigDecimal price;
     private String description;
     private String coverImage;
-    private Set<Category> categoryIds;
+    private Set<Category> categories;
 }
