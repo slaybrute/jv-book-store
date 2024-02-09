@@ -15,6 +15,7 @@ import org.mapstruct.MappingTarget;
 
 @Mapper(config = MapperConfig.class)
 public interface BookMapper {
+    @Mapping(target = "categories", ignore = true)
     Book toModel(CreateBookDto createBookDto);
 
     @Mapping(target = "categoryIds", ignore = true)
@@ -29,5 +30,14 @@ public interface BookMapper {
             categoryIds.add(category.getId());
         }
         bookDto.setCategoryIds(categoryIds);
+    }
+
+    @AfterMapping
+    default void setCategoryIds(@MappingTarget Book book, CreateBookDto createBookDto) {
+        Set<Category> categories = new HashSet<>();
+        for (Long categoryId : createBookDto.getCategoryIds()) {
+            categories.add(new Category(categoryId));
+        }
+        book.setCategories(categories);
     }
 }

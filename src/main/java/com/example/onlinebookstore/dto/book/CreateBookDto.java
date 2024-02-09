@@ -1,6 +1,5 @@
 package com.example.onlinebookstore.dto.book;
 
-import com.example.onlinebookstore.model.Category;
 import jakarta.validation.constraints.Min;
 import java.math.BigDecimal;
 import java.util.Set;
@@ -17,5 +16,5 @@ public class CreateBookDto {
     private BigDecimal price;
     private String description;
     private String coverImage;
-    private Set<Category> categories;
+    private Set<Long> categoryIds;
 }
