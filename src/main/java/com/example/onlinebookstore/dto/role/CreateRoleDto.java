@@ -1,11 +1,11 @@
 package com.example.onlinebookstore.dto.role;
 
 import com.example.onlinebookstore.model.enums.RoleName;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import lombok.NonNull;
 
 @Data
 public class CreateRoleDto {
-    @NonNull
+    @NotNull
     private RoleName roleName;
 }

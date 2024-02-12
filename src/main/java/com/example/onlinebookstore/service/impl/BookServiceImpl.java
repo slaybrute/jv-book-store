@@ -4,7 +4,6 @@ import com.example.onlinebookstore.dto.book.BookDto;
 import com.example.onlinebookstore.dto.book.BookDtoWithoutCategoryIds;
 import com.example.onlinebookstore.dto.book.BookSearchParameters;
 import com.example.onlinebookstore.dto.book.CreateBookDto;
-import com.example.onlinebookstore.exception.DeleteEntityException;
 import com.example.onlinebookstore.generator.IsbnGenerator;
 import com.example.onlinebookstore.mapper.BookMapper;
 import com.example.onlinebookstore.model.Book;
@@ -52,11 +51,6 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public void deleteById(Long id) {
-        Book book = bookRepository.findById(id).orElseThrow(() ->
-                new EntityNotFoundException("Cannot find book by id: " + id));
-        if (book.isDeleted()) {
-            throw new DeleteEntityException("This book is already deleted with id: " + id);
-        }
         bookRepository.deleteById(id);
     }
 

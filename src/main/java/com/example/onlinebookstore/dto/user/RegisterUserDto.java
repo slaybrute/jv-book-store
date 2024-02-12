@@ -2,22 +2,22 @@ package com.example.onlinebookstore.dto.user;
 
 import com.example.onlinebookstore.validation.user.registration.annotation.Email;
 import com.example.onlinebookstore.validation.user.registration.annotation.Password;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import lombok.NonNull;
 
 @Data
 public class RegisterUserDto {
-    @NonNull
+    @NotNull
     @Email
     private String email;
-    @NonNull
+    @NotNull
     @Password
     private String password;
-    @NonNull
+    @NotNull
     private String repeatedPassword;
-    @NonNull
+    @NotNull
     private String firstName;
-    @NonNull
+    @NotNull
     private String lastName;
     private String shippingAddress;
 }

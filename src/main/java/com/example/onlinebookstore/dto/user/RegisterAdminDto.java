@@ -6,21 +6,20 @@ import com.example.onlinebookstore.validation.user.registration.annotation.Passw
 import jakarta.validation.constraints.NotNull;
 import java.util.Set;
 import lombok.Data;
-import lombok.NonNull;
 
 @Data
 public class RegisterAdminDto {
     @Email
-    @NonNull
+    @NotNull
     private String email;
     @Password
     @NotNull
     private String password;
-    @NonNull
+    @NotNull
     private String repeatedPassword;
-    @NonNull
+    @NotNull
     private String firstName;
-    @NonNull
+    @NotNull
     private String lastName;
     private String shippingAddress;
     private Set<Role> roles;

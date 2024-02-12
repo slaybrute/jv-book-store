@@ -12,6 +12,7 @@ import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
+import org.mapstruct.Named;
 
 @Mapper(config = MapperConfig.class)
 public interface BookMapper {
@@ -33,11 +34,18 @@ public interface BookMapper {
     }
 
     @AfterMapping
-    default void setCategoryIds(@MappingTarget Book book, CreateBookDto createBookDto) {
+    default void setCategories(@MappingTarget Book book, CreateBookDto createBookDto) {
         Set<Category> categories = new HashSet<>();
         for (Long categoryId : createBookDto.getCategoryIds()) {
             categories.add(new Category(categoryId));
         }
         book.setCategories(categories);
+    }
+
+    @Named(value = "bookById")
+    default Book bookById(Long id) {
+        Book book = new Book();
+        book.setId(id);
+        return book;
     }
 }
