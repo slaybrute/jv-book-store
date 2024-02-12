@@ -4,6 +4,7 @@ import com.example.onlinebookstore.dto.user.RegisterAdminDto;
 import com.example.onlinebookstore.dto.user.RegisterUserDto;
 import com.example.onlinebookstore.dto.user.UserDto;
 import com.example.onlinebookstore.mapper.UserMapper;
+import com.example.onlinebookstore.model.ShoppingCart;
 import com.example.onlinebookstore.model.User;
 import com.example.onlinebookstore.model.enums.RoleName;
 import com.example.onlinebookstore.repository.user.UserRepository;
@@ -31,6 +32,7 @@ public class RegistrationServiceImpl implements RegistrationService {
         User user = userMapper.toModel(registerUserDto);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRoles(Set.of(roleService.findByRoleName(RoleName.USER)));
+        user.setShoppingCart(new ShoppingCart());
         return userMapper.toDto(userRepository.save(user));
     }
 

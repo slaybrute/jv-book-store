@@ -1,7 +1,6 @@
 package com.example.onlinebookstore.service.impl;
 
 import com.example.onlinebookstore.dto.user.UserDto;
-import com.example.onlinebookstore.exception.DeleteEntityException;
 import com.example.onlinebookstore.mapper.UserMapper;
 import com.example.onlinebookstore.model.User;
 import com.example.onlinebookstore.repository.user.UserRepository;
@@ -37,11 +36,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteById(Long id) {
-        User user = userRepository.findById(id).orElseThrow(() ->
-                new EntityNotFoundException("Cannot find user by id: " + id));
-        if (user.isDeleted()) {
-            throw new DeleteEntityException("This user is already deleted with id: " + id);
-        }
         userRepository.deleteById(id);
     }
 
