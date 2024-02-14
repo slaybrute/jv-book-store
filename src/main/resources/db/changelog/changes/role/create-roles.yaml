@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: add_admin_role
+      id: add-admin-role
       author: Artem Peiev
       changes:
         - insert:
@@ -10,7 +10,7 @@ databaseChangeLog:
                   name: role_name
                   value: ADMIN
   - changeSet:
-      id: add_user_role
+      id: add-user-role
       author: Artem Peiev
       changes:
         - insert:

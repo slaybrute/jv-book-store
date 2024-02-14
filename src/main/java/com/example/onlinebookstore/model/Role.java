@@ -10,12 +10,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 @Entity
 @Table(name = "roles")
-@NoArgsConstructor
 @Data
+@RequiredArgsConstructor
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,4 +23,8 @@ public class Role {
     @Enumerated(EnumType.STRING)
     @Column(name = "role_name", unique = true, nullable = false)
     private RoleName roleName;
+
+    public Role(RoleName roleName) {
+        this.roleName = roleName;
+    }
 }

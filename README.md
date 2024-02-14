@@ -76,9 +76,20 @@ This Spring Boot application serves as a book store, providing functionalities t
 - `GET /categories/{id}`: Get category by ID
 - `GET /categories/{id}/books`: Get books by category ID
 
-## Shopping Cart API
+## Cart API
+
+- `GET /cart`: Retrieve all items from the user's shopping cart. (Requires user authentication)
+- `POST /cart`: Add a new item to the shopping cart. (Requires user authentication)
+- `PUT /cart/cart-items/{id}`: Modify the quantity of a cart item by ID. (Requires user authentication)
+- `DELETE /cart/cart-items/{id}`: Remove a cart item by ID. (Requires user authentication)
 
 ## Order API
+
+- `PATCH /orders/{id}`: Update order status by order ID (Requires `ADMIN` role)
+- `POST /orders`: Create a new order, clean user shopping cart, and save it to the database
+- `GET /orders`: Get all orders belonging to the user with pagination
+- `GET /orders/{id}/items/`: Get all order items by order ID
+- `GET /orders/{orderId}/items/{itemId}`: Get order item by ID
 
 ## Setup
 

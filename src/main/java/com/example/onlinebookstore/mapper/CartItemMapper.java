@@ -29,10 +29,10 @@ public interface CartItemMapper {
     }
 
     @Named("cartItemDtoByModel")
-    default Set<CartItemResponseDto> cartItemDtoByModel(Set<CartItem> cartItem) {
+    default Set<CartItemResponseDto> cartItemDtoByModel(Set<CartItem> cartItems) {
         Set<CartItemResponseDto> cartItemResponseDtos = new HashSet<>();
-        for (CartItem item : cartItem) {
-            cartItemResponseDtos.add(toDto(item));
+        for (CartItem cartItem : cartItems) {
+            cartItemResponseDtos.add(toDto(cartItem));
         }
         return cartItemResponseDtos;
     }
