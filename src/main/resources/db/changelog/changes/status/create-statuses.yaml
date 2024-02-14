@@ -1,0 +1,51 @@
+databaseChangeLog:
+  - changeSet:
+      id: add-new-status
+      author: Artem Peiev
+      changes:
+        - insert:
+            tableName: statuses
+            columns:
+              - column:
+                  name: status_name
+                  value: NEW
+  - changeSet:
+      id: add-paid-status
+      author: Artem Peiev
+      changes:
+        - insert:
+            tableName: statuses
+            columns:
+              - column:
+                  name: status_name
+                  value: PAID
+  - changeSet:
+      id: add-delivering-status
+      author: Artem Peiev
+      changes:
+        - insert:
+            tableName: statuses
+            columns:
+              - column:
+                  name: status_name
+                  value: DELIVERING
+  - changeSet:
+      id: add-at-point-status
+      author: Artem Peiev
+      changes:
+        - insert:
+            tableName: statuses
+            columns:
+              - column:
+                  name: status_name
+                  value: AT_POINT
+  - changeSet:
+      id: add-complete-status
+      author: Artem Peiev
+      changes:
+        - insert:
+            tableName: statuses
+            columns:
+              - column:
+                  name: status_name
+                  value: COMPLETE
