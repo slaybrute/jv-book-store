@@ -9,10 +9,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import lombok.Data;
@@ -48,6 +50,8 @@ public class User implements UserDetails {
     private Set<Role> roles;
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private ShoppingCart shoppingCart;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<Order> orders;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -82,5 +86,13 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public void cleanShoppingCart() {
+        this.shoppingCart.setCartItems(Collections.emptySet());
+    }
+
+    public void addOrder(Order order) {
+        orders.add(order);
     }
 }

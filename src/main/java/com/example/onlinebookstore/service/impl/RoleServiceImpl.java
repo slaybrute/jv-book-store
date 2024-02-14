@@ -1,6 +1,5 @@
 package com.example.onlinebookstore.service.impl;
 
-import com.example.onlinebookstore.dto.role.CreateRoleDto;
 import com.example.onlinebookstore.mapper.RoleMapper;
 import com.example.onlinebookstore.model.Role;
 import com.example.onlinebookstore.model.enums.RoleName;
@@ -22,11 +21,5 @@ public class RoleServiceImpl implements RoleService {
     public Role findByRoleName(RoleName roleName) {
         return roleRepository.findByRoleName(roleName).orElseThrow(() ->
                 new EntityNotFoundException("Cannot find role by role name: " + roleName));
-    }
-
-    @Override
-    public Role createRole(CreateRoleDto createRoleDto) {
-        roleValidator.isRoleValid(createRoleDto);
-        return roleRepository.save(roleMapper.toModel(createRoleDto));
     }
 }
