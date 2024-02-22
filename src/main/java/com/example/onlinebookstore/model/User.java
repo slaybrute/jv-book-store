@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Set;
 import lombok.Data;
 import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -41,6 +42,7 @@ public class User implements UserDetails {
     private String lastName;
     @Column(name = "shipping_address ")
     private String shippingAddress;
+    @Where(clause = "is_deleted = FALSE")
     @Column(name = "is_deleted")
     private boolean isDeleted;
     @ManyToMany
