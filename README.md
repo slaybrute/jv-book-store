@@ -1,98 +1,82 @@
-# Online book store
+# 📚 Online Book Store
 
-## Overview
+## 🌟 Overview
+Welcome to the **Online Book Store**, your ultimate destination for managing and purchasing books online. Built with Spring Boot, this application comes packed with functionalities that enable seamless management of users, books, categories, shopping carts, and orders.
 
-This Spring Boot application serves as a book store, providing functionalities to manage users, books, categories, shopping carts, and orders. Below is a detailed list of entities present in the project:
+### Key Entities
+1. **User**: Registered users with personal information and secure authentication details.
+2. **Role**: Different roles like admin or user to manage platform access.
+3. **Book**: Contains essential details about each book, such as title, author, description, and price.
+4. **Category**: Classify books into categories for better organization.
+5. **ShoppingCart**: Holds a list of selected items before finalizing the purchase.
+6. **CartItem**: Individual book and its quantity within a user's shopping cart.
+7. **Order**: Represents a placed order with all necessary details like date, total price, and delivery.
+8. **OrderItem**: An individual item associated with an order.
 
-### Entities
+### 🛠 Technologies Used
+- **Spring Boot**
+- **Spring Data JPA**
+- **Spring Security**
+- **Hibernate**
+- **RESTful API**
 
-#### 1. User
-- Represents information about a registered user.
-- Includes authentication details and personal information.
+## 🛡 API Endpoints
 
-#### 2. Role
-- Represents the role of a user in the system (e.g., admin or user).
+### 🔑 Authentication API
+- `POST /auth/login`: Log in a registered user.
+- `POST /auth/register`: Register a new user.
+- `POST /auth/register/admin`: Admin registration.
 
-#### 3. Book
-- Represents a book available in the store.
-- Contains information such as title, author, description, and price.
+### 👥 User API
+- `GET /users`: Retrieve all users (Admin-only).
+- `GET /users/by-email`: Retrieve a user by their email (Admin-only).
+- `DELETE /users/{id}`: Delete a user by ID (Admin-only).
+- `DELETE /users`: Delete a user by email.
 
-#### 4. Category
-- Represents a category to which a book can belong.
+### 📚 Book API
+- `POST /books`: Add a new book (Admin-only).
+- `PUT /books/{id}`: Update book details by ID (Admin-only).
+- `DELETE /books/{id}`: Remove a book by ID (Admin-only).
+- `GET /books`: Retrieve all books with pagination.
+- `GET /books/{id}`: Get book details by ID.
+- `GET /books/search`: Search for books using specific parameters.
 
-#### 5. ShoppingCart
-- Represents a user's shopping cart.
-- Contains a list of `CartItem` objects.
+### 🗂 Category API
+- `POST /categories`: Add a new category (Admin-only).
+- `PUT /categories/{id}`: Update category information by ID (Admin-only).
+- `DELETE /categories/{id}`: Delete a category by ID (Admin-only).
+- `GET /categories`: Retrieve all categories with pagination.
+- `GET /categories/{id}`: Get a category by ID.
+- `GET /categories/{id}/books`: Retrieve books based on category ID.
 
-#### 6. CartItem
-- Represents an item in a user's shopping cart.
-- Associated with a specific book and quantity.
+### 🛒 Cart API
+- `GET /cart`: Retrieve all items in a user's shopping cart (Authenticated users only).
+- `POST /cart`: Add a new item to the shopping cart (Authenticated users only).
+- `PUT /cart/cart-items/{id}`: Modify the quantity of a cart item (Authenticated users only).
+- `DELETE /cart/cart-items/{id}`: Remove an item from the cart (Authenticated users only).
 
-#### 7. Order
-- Represents an order placed by a user.
-- Contains information such as order date, total price, and delivery details.
+### 🛍 Order API
+- `PATCH /orders/{id}`: Update order status by order ID (Admin-only).
+- `POST /orders`: Create a new order and clear the user's cart.
+- `GET /orders`: Retrieve all orders for the logged-in user with pagination.
+- `GET /orders/{id}/items`: Retrieve all order items by order ID.
+- `GET /orders/{orderId}/items/{itemId}`: Retrieve a specific order item by ID.
 
-#### 8. OrderItem
-- Represents an item in a user's order.
-- Associated with a specific book and quantity.
+## 🚀 Setup & Installation
 
-## Technologies Used
-- Spring Boot
-- Spring Data JPA
-- Spring Security
-- Hibernate
-- RESTful API
+### Prerequisites
+- Java JDK 17 or newer
+- Maven
 
-# API Endpoints
+### Configuration
+1. **Database Connection**: Modify `src/main/resources/application.properties` to ensure the correct database URL, username, and password are configured.
+2. **Environment Variables**: Set any required environment variables (e.g., API keys, other sensitive information).
 
-## Authentication API
-
-- `POST /auth/login`: Login user
-- `POST /auth/register`: Register new user
-- `POST /auth/register/admin`: Register new user by admin
-
-## User API
-
-- `GET /users`: Get all users (Requires `ADMIN` role)
-- `GET /users/by-email`: Get user by email (Requires `ADMIN` role)
-- `DELETE /users/{id}`: Delete user by ID (Requires `ADMIN` role)
-- `DELETE /users`: Delete user by email
-
-## Book API
-
-- `POST /books`: Create a new book (Requires `ADMIN` role)
-- `PUT /books/{id}`: Update book by ID (Requires `ADMIN` role)
-- `DELETE /books/{id}`: Delete book by ID (Requires `ADMIN` role)
-- `GET /books`: Get all books by pagination
-- `GET /books/{id}`: Get book by ID
-- `GET /books/search`: Search books by parameters
-
-## Category API
-
-- `POST /categories`: Create a new category (Requires `ADMIN` role)
-- `PUT /categories/{id}`: Update category by ID (Requires `ADMIN` role)
-- `DELETE /categories/{id}`: Delete category by ID (Requires `ADMIN` role)
-- `GET /categories`: Get all categories by pagination
-- `GET /categories/{id}`: Get category by ID
-- `GET /categories/{id}/books`: Get books by category ID
-
-## Cart API
-
-- `GET /cart`: Retrieve all items from the user's shopping cart. (Requires user authentication)
-- `POST /cart`: Add a new item to the shopping cart. (Requires user authentication)
-- `PUT /cart/cart-items/{id}`: Modify the quantity of a cart item by ID. (Requires user authentication)
-- `DELETE /cart/cart-items/{id}`: Remove a cart item by ID. (Requires user authentication)
-
-## Order API
-
-- `PATCH /orders/{id}`: Update order status by order ID (Requires `ADMIN` role)
-- `POST /orders`: Create a new order, clean user shopping cart, and save it to the database
-- `GET /orders`: Get all orders belonging to the user with pagination
-- `GET /orders/{id}/items/`: Get all order items by order ID
-- `GET /orders/{orderId}/items/{itemId}`: Get order item by ID
-
-## Setup
-
-1. Clone the repository.
+### Running the Application
+1. **Clone the Repository**:
    ```bash
    git clone https://github.com/slaybrute/book-store.git
+2. **Run the Application**:
+   ```bash
+   java -jar target/online-bookstore-0.0.1-SNAPSHOT.jar
+   
